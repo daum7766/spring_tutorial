@@ -29,15 +29,18 @@ public class UserController {
     PasswordEncoder passwordEncoder;
 
 
+
     @PostMapping(value = "/login")
     public Object Login(@RequestBody User loginUser) {
         Optional<User> user = userDao.findById(loginUser.getUid());
         if(!user.isPresent()) {
             return new ResponseEntity<>("id", HttpStatus.BAD_REQUEST);
         }
-        if(passwordEncoder.matches(loginUser.getPassword(), user.get().getPassword())) {
+        String encodePassword = passwordEncoder.encode(loginUser.getPassword());
+        if(passwordEncoder.matches(encodePassword, user.get().getPassword())) {
             // 로그인 처리 jwt토큰 발급하기
-            return new ResponseEntity<>("login", HttpStatus.OK);
+            // String token = jwtUtil.generateToken(user.get());
+            // return new ResponseEntity<>(token, HttpStatus.OK);
         }
         return new ResponseEntity<>("password", HttpStatus.BAD_REQUEST);
     }
@@ -70,6 +73,12 @@ public class UserController {
     public Object Logout() {
 
         return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/test")
+    public Object test() {
+
+        return new ResponseEntity<>("test", HttpStatus.OK);
     }
     
 
