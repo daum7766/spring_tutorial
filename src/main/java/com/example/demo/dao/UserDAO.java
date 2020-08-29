@@ -3,7 +3,7 @@ package com.example.demo.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.dto.User;
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 public interface UserDAO extends JpaRepository<User, String> {
     

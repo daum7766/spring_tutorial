@@ -38,10 +38,7 @@ public class ArticleController {
 
     @GetMapping(value = "/article/{id}")
     public Object GetArticle(@PathVariable("id") Long id) {
-        System.out.println(id);
         Optional<Article> article = articleDAO.findById(id);
-        System.out.println(article);
-
         return article;
     }
 
@@ -57,7 +54,6 @@ public class ArticleController {
         Optional<Article> articles = articleDAO.findById(id);
         return articles.map(
             article -> {
-                System.out.println(article);
                 article.setTitle(newArticle.getTitle());
                 article.setContent(newArticle.getContent());
                 return articleDAO.save(article);

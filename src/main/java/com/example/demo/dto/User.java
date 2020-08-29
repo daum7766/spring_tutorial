@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +20,6 @@ public class User {
     @Id //pk로 사용하겠다
     private String uid;
 
-    @JsonIgnore //json으로 바꿀때 빼겠다
     private String password;
     private String email;
     
