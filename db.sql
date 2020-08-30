@@ -19,7 +19,7 @@ create table article(
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100),
     content VARCHAR(1000),
-    create_date datetime DEFAULT current_timestamp()
-    user VARCHAR(8),
+    create_date datetime DEFAULT current_timestamp(),
+    user char(8),
     FOREIGN KEY(user) REFERENCES user(uid) ON UPDATE CASCADE
     ) DEFAULT CHARSET=utf8;

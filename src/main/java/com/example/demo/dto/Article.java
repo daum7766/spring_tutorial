@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,4 +31,12 @@ public class Article {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @Column(insertable = false, updatable = false) //읽기전용
     private LocalDateTime createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
+
+    public String getUser() {
+        return user.getUid();
+    }
 }

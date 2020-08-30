@@ -60,6 +60,7 @@ public class UserController {
 
     @PostMapping(value="/signup")
     public Object Signup(@RequestBody User user) {
+        System.out.println(user);
         // 비밀번호 패턴이 맞지않다면
         if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$", user.getPassword())){
             return new ResponseEntity<>("password", HttpStatus.BAD_REQUEST);
