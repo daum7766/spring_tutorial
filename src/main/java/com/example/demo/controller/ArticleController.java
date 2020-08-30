@@ -1,6 +1,7 @@
 package com.example.demo.controller;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +11,8 @@ import com.example.demo.dao.ArticleDAO;
 import com.example.demo.dto.Article;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +30,7 @@ public class ArticleController {
     @Autowired
     ArticleDAO articleDAO;
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+    private final Log logger = LogFactory.getLog(getClass());
 
     @GetMapping(value = "/article/all")
     public Object GetAllArticle() {
@@ -44,6 +47,9 @@ public class ArticleController {
 
     @PostMapping(value="/article")
     public Object PostArticle(@RequestBody Article article) {
+        // 유저정보 가져오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info(auth);
         article.setCreateDate(LocalDateTime.now());
         return articleDAO.save(article);
     }
