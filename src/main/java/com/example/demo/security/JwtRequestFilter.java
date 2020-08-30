@@ -34,17 +34,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				System.out.println("Unable to get JWT Token");
+				logger.info("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
-				System.out.println("JWT 토큰 만료");
+				logger.info("JWT 토큰 만료");
 			}
 		} else {
-			logger.warn("토큰의 시작은 Bearer이어야 합니다.");
+			logger.info("토큰의 시작은 Bearer이어야 합니다.");
 		}
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-			System.out.println(userDetails);
 			// if token is valid configure Spring Security to manually set
 			// authentication
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
